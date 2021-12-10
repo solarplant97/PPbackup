@@ -1,0 +1,10 @@
+package com.puppy.admin.room.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value ="/room")
+public class AdminRoomController {
+	private static final String CONTEXT_PATH = "admin/room";
+}

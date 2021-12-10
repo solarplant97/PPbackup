@@ -1,0 +1,40 @@
+package com.puppy.admin.room.dao;
+
+import java.util.List;
+
+import javax.inject.Inject;
+import org.springframework.stereotype.Repository;
+
+import com.puppy.admin.room.vo.AdminRoomVO;
+
+@Repository
+public class AdminRoomDAOImpl implements AdminRoomDAO {
+
+	@Inject
+	private SqlSession sqlSession;
+	
+	@Override
+	public List<AdminRoomVO> roomList(AdminRoomVO param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object roomDetail(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int roomAdd(AdminRoomVO param) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int roomDisabled(AdminRoomVO param) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<div class="container-fluid">
+	<div class ="navbar-header">
+		<button type="button" class="navbar-toggle collapsed" 
+		data-togle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class ="icon-var"></span>
+			<span class ="icon-var"></span>
+			<span class ="icon-var"></span>
+		<a class ="navbar-brand" href="#"></a>
+		</button>
+	</div>
+</div>

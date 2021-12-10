@@ -1,0 +1,5 @@
+package com.puppy.admin.room.vo;
+
+public class AdminRoomVO {
+
+}

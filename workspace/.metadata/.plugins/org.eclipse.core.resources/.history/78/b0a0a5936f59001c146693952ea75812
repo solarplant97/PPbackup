@@ -1,0 +1,12 @@
+package com.puppy.admin.room.vo;
+
+public class AdminRoomVO {
+	private int c_no; // 케이지 번호
+	private String c_kind; // 케이지 종류
+	private String c_type; // 케이지 유형
+	private String c_price; // 케이지 가격
+	private String c_explain; // 케이지 설명
+	private String c_picture; // 케이지 사진
+	private String c_status; // 케이지 상태
+	private String c_usestatus; // 케이지 사용현황
+}

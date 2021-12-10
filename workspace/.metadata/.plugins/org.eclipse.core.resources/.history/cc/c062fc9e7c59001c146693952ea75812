@@ -1,0 +1,43 @@
+package com.puppy.admin.room.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.puppy.admin.room.vo.AdminRoomVO;
+
+
+@Service
+@Transactional
+public class AdminRoomServiceImpl implements AdminRoomService {
+
+	@Autowired
+	private class AdminRoomDAO adminRoomDAO 
+	
+	@Override
+	public List<AdminRoomVO> roomList(AdminRoomVO param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object roomDetail(int no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int roomAdd(AdminRoomVO param) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int roomDisabled(AdminRoomVO param) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
