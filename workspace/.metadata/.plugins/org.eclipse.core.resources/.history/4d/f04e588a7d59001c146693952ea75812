@@ -1,5 +1,0 @@
-package com.puppy.admin.room.dao;
-
-public interface AdminRoomDAO {
-
-}
