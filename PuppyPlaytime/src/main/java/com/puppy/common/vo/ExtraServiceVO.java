@@ -1,12 +1,12 @@
 package com.puppy.common.vo;
 
 public class ExtraServiceVO {
-	private int s_no;
-	private String s_name;
-	private String s_explain;
-	private String s_status;
-	private int s_price;
-	private int c_no;
+	private int s_no; // 서비스번호
+	private String s_name; //서비스이름
+	private String s_explain; //서비스이름
+	private String s_status; //서비스이름
+	private int s_price; //서비스이름
+	private int c_no; //케이지 번호
 	
 	public ExtraServiceVO(int s_no, String s_name, String s_explain, String s_status, int s_price, int c_no) {
 		super();
@@ -69,6 +69,7 @@ public class ExtraServiceVO {
 	public void setC_no(int c_no) {
 		this.c_no = c_no;
 	}
+	
 	
 	
 }

@@ -1,7 +1,6 @@
 package com.puppy.admin.room.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,7 +92,7 @@ public class CageRoomController {
 				svo.setS_price(Integer.parseInt(str));
 				svo.setS_status("임시");
 				System.out.println(svo.getS_no());
-				int result2 = extraServiceService.extraServiceAdd2(svo);
+				extraServiceService.extraServiceAdd2(svo);
 			}
 		}
 		

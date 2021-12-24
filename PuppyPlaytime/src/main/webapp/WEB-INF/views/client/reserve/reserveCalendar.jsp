@@ -5,8 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/reserve/reserveCalendar.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/reserve/reserveCalendar.css">
 <script src="/resources/js/reserve/reserveCalendar.js"></script>
 <title>예약하기</title>
 </head>
@@ -141,9 +140,8 @@
 	<form id="dateSend" name="dateSend">
 		<button type="button" class="btn btn-lg btn-success" id="reservation"
 			disabled>예약하러 가기</button>
-		<input type="hidden" id="startDate" name="startDate"
-			value="/${month}/${year}" /> <input type="hidden" id="endDate"
-			name="endDate" value="/${month}/${year}" />
+		<input type="hidden" id="startDate" name="startDate" value="${year}-${month}-" /> 
+		<input type="hidden" id="endDate" name="endDate" value="${year}-${month}-" />
 	</form>
 
 </body>

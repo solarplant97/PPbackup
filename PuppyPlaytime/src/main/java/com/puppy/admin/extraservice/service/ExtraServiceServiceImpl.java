@@ -49,7 +49,6 @@ public class ExtraServiceServiceImpl implements ExtraServiceService {
 	@Override
 	public int extraServiceAdd2(ExtraServiceVO svo) {
 		// TODO Auto-generated method stub
-		System.out.println("서비스임"+svo.getS_no());
 		return extraServiceDAO.extraServiceAdd2(svo);
 	}
 
