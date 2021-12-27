@@ -16,8 +16,11 @@ input,textarea,select { margin:0; padding:0;border:0;display:inline}
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	
-	$(function(){
+$(function(){
 		$("#insertData").click(function(){
+			var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			var emailVal = $("#to").val();
+			
 			if($("#subject").val().replace(/\s/g,"")==""){
 				alert('제목을 입력해주세요.');
 				return false;
@@ -26,9 +29,12 @@ input,textarea,select { margin:0; padding:0;border:0;display:inline}
 				alert('내용을 입력해주세요.');
 				return false;
 			}
-			if($("#to").val().replace(var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;){
-				alert('받는사람 이메일을 입력해주세요.');
-				return false;
+			
+			if(emailVal.match(regExp) != null){
+				alert('전송');
+			}else{
+				alert('받는사람 이메일을 형식에 맞게 입력해주세요.');
+				return false;	
 			}
 			
 			$("#mailForm").attr({

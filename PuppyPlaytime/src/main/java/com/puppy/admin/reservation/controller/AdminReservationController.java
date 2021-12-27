@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.puppy.admin.extraservice.service.ExtraServiceService;
 import com.puppy.admin.reservation.service.AdminReservationService;
+import com.puppy.admin.room.service.CageRoomService;
 import com.puppy.admin.room.vo.CageRoomVO;
+import com.puppy.client.member.service.MemberService;
+import com.puppy.client.member.vo.MemberVO;
 import com.puppy.client.reservation.vo.ReservationVO;
 import com.puppy.common.vo.ExtraServiceVO;
 
@@ -30,7 +34,16 @@ public class AdminReservationController {
 
 	@Autowired
 	private AdminReservationService reservationService;
+	
+	@Autowired
+	private ExtraServiceService extraServiceService;
+	
+	@Autowired
+	private CageRoomService cageRoomService;
 
+	@Autowired
+	private MemberService memberService;
+	
 	@Autowired
 	private JavaMailSender mailSender;
 	
@@ -63,13 +76,19 @@ public class AdminReservationController {
 
 		ModelAndView mav = new ModelAndView();
 		ReservationVO rvo = reservationService.reservationDetail(Integer.parseInt(no));
+		/* MemberVO mvo = memberService.memberDetail(rvo.getM_id()); */
+		CageRoomVO cvo = cageRoomService.roomDetail(rvo.getC_no());
+		List<ExtraServiceVO> list = extraServiceService.extraServiceDetail2(rvo.getC_no());
+		
 		
 		mav.addObject("reservationVO", rvo);
+		mav.addObject("extraServiceList", list);
+		mav.addObject("cageRoomVO", cvo);
 		mav.setViewName(CONTEXT_PATH + "/reservationDetail");
 		return mav;
 	}
 	
-	@RequestMapping("/reservationCancel") // 예약 승인/거부
+	@RequestMapping("/reservationApproval") // 예약 승인/거부
 	public String reservationApproval(@ModelAttribute ReservationVO param) {
 		String resultStr = "";
 		int result = reservationService.reservationApproval(param);
@@ -106,7 +125,7 @@ public class AdminReservationController {
 	}
 	
 	@RequestMapping("/sendMail") //거부사유 메일
-	public void sendMail(HttpServletRequest request) throws Exception{
+	public String sendMail(HttpServletRequest request) throws Exception{
         
         String subject = ""; //제목
         subject = request.getParameter("subject");
@@ -131,5 +150,16 @@ public class AdminReservationController {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        return "redirect:/admin/reservation/reservationList";
+	}
+	
+	
+	@RequestMapping(value = "/mail") // 부가서비스 리스트
+	public ModelAndView writeForm(@ModelAttribute ExtraServiceVO param) {
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(CONTEXT_PATH + "/reservationMail");
+
+		return mav;
 	}
 }
