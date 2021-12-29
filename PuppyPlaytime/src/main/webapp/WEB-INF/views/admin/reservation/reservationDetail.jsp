@@ -28,9 +28,9 @@ $(function(){
 	
 	$("#updateData2").click(function(){
 		if(confirm('예약을 거부하시겠습니까?')){
-			$("#reservationForm").attr("action","/admin/reservation/reservationApproval");
+			$("#reservationForm").attr("action","/admin/reservation/reservationCancel");
 			$("#reservationForm").submit();
-			window.location.href ="/admin/reservation/mail"
+			 window.location.href ="/admin/reservation/mail"
 		}
 	});
 	
@@ -44,6 +44,8 @@ $(function(){
 <body>
 	<div>
 		<form id ="reservationForm" name="reservationForm" method="post">
+			<input type ="hidden" id ="r_no" name ="r_no" value ="${reservationVO.r_no}"/>
+		</form>
 			<table border="1">
 				<thead>
 					<tr>
@@ -59,29 +61,46 @@ $(function(){
 					</tr>
 
 					<tr>
-						<th><span class ="required"></span>케이지 번호</th>
-						<td colspan ="3"><input type="text" id="c_no" name="c_no" value="${cageRoomVO.c_no}" readonly="readonly"/></td>
+						<th><span class ="required">회원 아이디</span></th>
+						<td><input type="text" id="m_id" name="m_id" value="${memberVO.m_id}" readonly="readonly"/></td>
+						<th><span class ="required"></span>회원 전화번호</th>
+						<td><input type="text" id="m_phone" name="m_phone" value="${memberVO.m_phone}" readonly="readonly"/></td>
+					</tr>
+					
+					<tr>
+						<th><span class ="required">회원 이름</span></th>
+						<td><input type="text" id="m_name" name="m_name" value="${memberVO.m_name}" readonly="readonly"/></td>
+						<th><span class ="required"></span>회원 이메일 주소</th>
+						<td><input type="text" id="m_email" name="m_email" value="${memberVO.m_email}" readonly="readonly"/></td>
 					</tr>
 					<tr>
-						<th><span class ="required"></span>가격</th>
-						<td colspan ="3"><input type="text" id="c_price" name="c_price" value="${cageRoomVO.c_price}" readonly="readonly"/></td>
+						<th><span class ="required"></span>회원 주소</th>
+						<td colspan ="3"><input type="text" id="m_address" name="m_address" value="${memberVO.m_address}" readonly="readonly"/></td>
 					</tr>
 					<tr>
-						<th><span class ="required"></span>사용현황</th>
-						<td colspan ="3"><input type="text" id="c_usestatus" name="c_usestatus" value="${cageRoomVO.c_usestatus}" readonly="readonly"/></td>
+						<th><span class ="required">강아지 이름</span></th>
+						<td><input type="text" id="p_name" name="p_name" value="${petVO.p_name}" readonly="readonly"/></td>
+						<th><span class ="required"></span>견종</th>
+						<td><input type="text" id="p_dogbreed" name="p_dogbreed" value="${petVO.p_dogbreed}" readonly="readonly"/></td>
 					</tr>
 					<tr>
-						<th><span class ="required"></span>케이지 설명</th>
-						<td colspan ="3"><textarea cols="60" rows="10" id="c_explain" name="c_explain" readonly="readonly"><c:out value="${cageRoomVO.c_explain}"/></textarea></td>
+						<th><span class ="required">성별</span></th>
+						<td><input type="text" id="p_gender" name="p_gender" value="${petVO.p_gender}" readonly="readonly"/></td>
+						<th><span class ="required"></span>체중</th>
+						<td><input type="text" id="p_weight" name="p_weight" value="${petVO.p_weight}" readonly="readonly"/></td>
 					</tr>
 					<tr>
-						<th><span class ="required"></span>케이지 사진</th>
+						<th><span class ="required"></span>강아지 사진</th>
 						
-						<c:if test="${empty cageRoomVO.c_picture}">
+						<c:if test="${empty petVO.p_picture}">
 									<td colspan="3" align="center">등록된 사진 정보가 존재하지 않습니다.</td>
 							</c:if>
-									<td colspan="3"><img src="/image/roomImages/${cageRoomVO.c_picture}"/></td>
+									<td colspan="3"><img src="/image/petImages/${pet.p_picture}"/></td>
 						
+					</tr>
+					<tr>
+						<th><span class ="required"></span>강아지 특의사항</th>
+						<td colspan ="3"><input type="text" id="p_unique" name="p_unique" value="${petVO.p_unique}" readonly="readonly"/></td>
 					</tr>
 					
 					<tr>
@@ -97,10 +116,19 @@ $(function(){
 							</td> 
 							</c:if>
 					</tr>
+					<tr>
+						<th><span class ="required"></span>가격</th>
+						<td colspan ="3"><input type="text" id="r_payPrice" name="r_payPrice" value="${reservationVO.r_payPrice}" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<th><span class ="required">예약 신청일</span></th>
+						<td><input type="text" id="r_requestDate" name="r_requestDate" value="${reservationVO.r_requestDate}" readonly="readonly"/></td>
+						<th><span class ="required"></span>실제 예약일</th>
+						<td><input type="text" id="r_startDate" name="r_startDate" value="${reservationVO.r_startDate} ~ ${reservationVO.r_endDate}" readonly="readonly"/></td>
+					</tr>
 					
 				</tbody>
 			</table>
-		</form>
 	</div>
 	<div>
 		<p></p>

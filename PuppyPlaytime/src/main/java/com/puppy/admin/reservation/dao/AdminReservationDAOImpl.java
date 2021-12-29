@@ -43,7 +43,6 @@ public class AdminReservationDAOImpl implements AdminReservationDAO {
 
 	@Override
 	public int reservationCancel(ReservationVO param) {
-		// TODO Auto-generated method stub
 		return SqlSession.update(namespace+".reservationCancel",param);
 	}
 
