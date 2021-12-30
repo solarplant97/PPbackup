@@ -14,7 +14,7 @@
 		<result property="m_required1" column="m_required1"></result>
 		<result property="m_required2" column="m_required2"></result>
 		<result property="m_status" column="m_status"></result>
-		
+		<result property="m_regdate" column="m_regdate"></result>
 	</resultMap>
 	
 	<select id="adminMemberList" parameterType="com.puppy.client.member.vo.MemberVO" resultMap="memberVO">

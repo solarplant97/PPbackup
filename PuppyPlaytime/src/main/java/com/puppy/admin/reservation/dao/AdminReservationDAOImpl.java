@@ -45,5 +45,11 @@ public class AdminReservationDAOImpl implements AdminReservationDAO {
 	public int reservationCancel(ReservationVO param) {
 		return SqlSession.update(namespace+".reservationCancel",param);
 	}
+	
+	@Override
+	public List<ReservationVO> todayReservationList(ReservationVO param) {
+		// TODO Auto-generated method stub
+		return SqlSession.selectList(namespace+".todayReservationList",param);
+	}
 
 }

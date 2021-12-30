@@ -1,5 +1,7 @@
 package com.puppy.client.member.vo;
 
+import java.sql.Date;
+
 public class MemberVO {
 
 	private String m_id;// 아이디
@@ -13,7 +15,7 @@ public class MemberVO {
 	private String m_required1;// 필수약관1
 	private String m_required2;// 필수약관2
 	private String m_status;// 회원상태
-
+	private Date m_regdate;//가입일
 	
 
 	public MemberVO() {
@@ -21,7 +23,8 @@ public class MemberVO {
 	}
 
 	public MemberVO(String m_id, String m_pw, String m_name, String m_birth, String m_email, String m_phone,
-			String m_address, String m_optional, String m_required1, String m_required2, String m_status) {
+			String m_address, String m_optional, String m_required1, String m_required2, String m_status,
+			Date m_regdate) {
 		super();
 		this.m_id = m_id;
 		this.m_pw = m_pw;
@@ -34,6 +37,7 @@ public class MemberVO {
 		this.m_required1 = m_required1;
 		this.m_required2 = m_required2;
 		this.m_status = m_status;
+		this.m_regdate = m_regdate;
 	}
 
 
@@ -125,13 +129,23 @@ public class MemberVO {
 		this.m_status = m_status;
 	}
 
+	public Date getM_regdate() {
+		return m_regdate;
+	}
+
+	public void setM_regdate(Date m_regdate) {
+		this.m_regdate = m_regdate;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [m_id=" + m_id + ", m_pw=" + m_pw + ", m_name=" + m_name + ", m_birth=" + m_birth
 				+ ", m_email=" + m_email + ", m_phone=" + m_phone + ", m_address=" + m_address + ", m_optional="
 				+ m_optional + ", m_required1=" + m_required1 + ", m_required2=" + m_required2 + ", m_status="
-				+ m_status + "]";
+				+ m_status + ", m_regdate=" + m_regdate + "]";
 	}
+
+
 
 
 }

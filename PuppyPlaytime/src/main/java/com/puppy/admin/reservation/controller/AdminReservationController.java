@@ -82,6 +82,7 @@ public class AdminReservationController {
 		return mav;
 	}
 	
+	
 	@RequestMapping("/reservationDetail") // 예약 상세 정보
 	public ModelAndView reservationDetail(@RequestParam("r_no") String no) {
 

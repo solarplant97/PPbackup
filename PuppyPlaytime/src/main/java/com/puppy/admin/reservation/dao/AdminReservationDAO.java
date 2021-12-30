@@ -16,6 +16,8 @@ public interface AdminReservationDAO {
 
 	public int reservationCancel(ReservationVO param);
 
+	public List<ReservationVO> todayReservationList(ReservationVO param);
+
 
 
 }

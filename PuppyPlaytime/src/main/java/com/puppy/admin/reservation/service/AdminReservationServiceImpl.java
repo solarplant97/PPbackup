@@ -49,4 +49,11 @@ public class AdminReservationServiceImpl implements AdminReservationService {
 		return reservationDAO.reservationCancel(param);
 	}
 
+	@Override
+	public List<ReservationVO> todayReservationList(ReservationVO param) {
+		List<ReservationVO> list = new ArrayList<ReservationVO>();
+		list = reservationDAO.todayReservationList(param);
+		return list;
+	}
+
 }

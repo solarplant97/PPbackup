@@ -16,4 +16,6 @@ public interface AdminReservationService {
 
 	public int reservationCancel(ReservationVO param);
 
+	public List<ReservationVO> todayReservationList(ReservationVO param);
+
 }

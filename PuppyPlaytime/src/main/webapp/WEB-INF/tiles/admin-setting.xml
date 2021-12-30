@@ -52,4 +52,9 @@
 		<put-attribute name ="body" value ="/WEB-INF/views/admin/notice/{1}.jsp"/>
 	</definition>
 	
+	<definition name="admin/statistics/*" extends="adminContent2">
+		<put-attribute name ="title" value ="통계"/>
+		<put-attribute name ="body" value ="/WEB-INF/views/admin/statistics/{1}.jsp"/>
+	</definition>
+	
 </tiles-definitions>
