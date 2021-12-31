@@ -36,6 +36,13 @@
 		group by TO_CHAR(r_startDate, 'yyyy-mm')
 		order by TO_CHAR(r_startDate, 'yyyy-mm') desc
 	</select>
-
+	
+	<select id="adminTodayJoinStatistics" parameterType="com.puppy.client.member.vo.MemberVO" resultMap="hashMap">
+		Select TO_CHAR(m_regdate, 'yyyy-mm')as month , count(*) as reservation 
+        From member_tbl
+        where m_status = 'active' and m_regdate = sysdate
+		group by TO_CHAR(m_regdate, 'yyyy-mm')
+		order by TO_CHAR(m_regdate, 'yyyy-mm') desc
+	</select>
 
 </mapper>

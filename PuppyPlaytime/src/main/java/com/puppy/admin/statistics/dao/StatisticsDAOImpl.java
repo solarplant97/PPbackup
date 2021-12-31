@@ -34,4 +34,10 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 		return SqlSession.selectList(namespace+".adminSalesStatistics","");
 	}
 
+	@Override
+	public Map<String, Integer> adminTodayJoinStatistics() {
+		// TODO Auto-generated method stub
+		return SqlSession.selectMap(namespace+".adminTodayJoinStatistics","");
+	}
+
 }

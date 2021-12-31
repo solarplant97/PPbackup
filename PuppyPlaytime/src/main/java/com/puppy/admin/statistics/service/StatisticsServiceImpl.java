@@ -34,4 +34,10 @@ public class StatisticsServiceImpl implements StatisticsService {
 		return StatisticsDAO.adminSalesStatistics();
 	}
 
+	@Override
+	public Map<String, Integer> adminTodayJoinStatistics() {
+		// TODO Auto-generated method stub
+		return StatisticsDAO.adminTodayJoinStatistics();
+	}
+
 }

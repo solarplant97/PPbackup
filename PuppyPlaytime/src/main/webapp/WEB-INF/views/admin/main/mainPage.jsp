@@ -73,5 +73,20 @@
 			</tbody>
 		</table>
 	</div>
+	<div>
+		<table>
+				<c:if test="${empty join}">
+					<tr>
+						<td colspan="2" align="center">등록된 회원 정보가 존재하지 않습니다.</td>
+					</tr>
+				</c:if>
+				<c:forEach items="${join}" var="j">
+					<tr>
+						<td align ="center">${j.month}</td>
+						<td align ="center">${j.reservation}명</td>
+					</tr>
+				</c:forEach>
+		</table>
+	</div>
 </body>
 </html>
