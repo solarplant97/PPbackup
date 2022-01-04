@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.puppy.admin.room.vo.CageRoomVO;
 import com.puppy.client.reservation.vo.ReservationVO;
+import com.puppy.client.reservation.vo.ReserveDate;
+import com.puppy.common.vo.ExtraServiceVO;
 import com.puppy.common.vo.PetVO;
 
 @Repository
@@ -18,16 +20,10 @@ public class ReservationDAOImpl implements ReservationDAO{
 	
 	// 룸 리스트 띄워주기
 	@Override
-	public List<CageRoomVO> listRoom() throws Exception {
-		return session.selectList("listRoom");
+	public List<CageRoomVO> listRoom(ReserveDate rDate) throws Exception {
+		return session.selectList("listRoom", rDate);
 	}
-
-	// 상세 예약 창에서 펫 등록
-	@Override
-	public void petRegister(PetVO pvo) throws Exception {
-		session.insert("petRegister", pvo);
-	}
-
+	
 	// cage 상세정보 가져오기
 	@Override
 	public CageRoomVO cageDetail(int c_no) throws Exception {
@@ -48,7 +44,19 @@ public class ReservationDAOImpl implements ReservationDAO{
 
 	// 펫 상세 불러오기
 	@Override
-	public PetVO importPetDetail(String p_no) throws Exception {
+	public PetVO importPetDetail(int p_no) throws Exception {
 		return session.selectOne("importPetDetail", p_no);
+	}
+
+	// 아무 펫 한마리 불러오기
+	@Override
+	public PetVO importOnePet() throws Exception {
+		return session.selectOne("importOnePet");
+	}
+
+	// 부가서비스 띄워주기
+	@Override
+	public List<ExtraServiceVO> listExtraService(int c_no) throws Exception {
+		return session.selectList("listExtraService", c_no);
 	}
 }

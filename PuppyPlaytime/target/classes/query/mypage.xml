@@ -4,13 +4,10 @@
 <mapper namespace="query.mypage">
 
 <!-- 펫리스트 조회 -->
-<select id="petList" parameterType="pet" resultType="pet">
-	
-	select p_no, p_picture, p_name, p_dogbreed, p_gender, p_weight, p_unique, m_id
+<select id="petList" resultType="pet">
+	select p_no, p_picture, p_name, p_dogbreed, p_gender, p_weight, p_unique
 	from Pet_tbl
-	WHERE m_id=#{m_id}
 	order by p_no desc
-	
 </select>
 
 <!-- 상세 페이지를 위한 게시물 조회 -->
@@ -61,15 +58,14 @@
 		delete from pet_tbl where p_no=#{p_no}
 	</delete>
 	
-	<!-- 예약 리스트(예약 정보) -->
-	<select id="reservationList" resultType="com.puppy.client.reservation.vo.ReservationVO">
-		select a.r_no, a.r_startDate, a.r_endDate, a.r_payPrice, b.c_kind, b.c_type, b.c_usestatus
-		from reservation_tbl a INNER JOIN cageroom_tbl b ON a.c_no = b.c_no
-		
-		
-	</select>
+	<!-- 예약 리스트 -->
+<select id="reservationList" resultType="com.puppy.client.reservation.vo.ReservationVO">
+	select r_no, r_startDate, r_endDate, c_no
+	from reservation_tbl
+	order by r_no desc
+</select>
 
-
+	<!-- 내정보 상세 -->
 	<select id="myDetail" parameterType="String" resultType="com.puppy.client.member.vo.MemberVO">
 	SELECT
 		m_id, m_pw, m_name, m_birth, m_phone, m_address, m_email

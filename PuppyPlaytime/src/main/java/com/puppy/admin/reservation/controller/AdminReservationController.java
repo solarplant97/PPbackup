@@ -1,42 +1,41 @@
 package com.puppy.admin.reservation.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.puppy.admin.extraservice.service.ExtraServiceService;
-import com.puppy.admin.member.service.AdminMemberService;
 import com.puppy.admin.reservation.service.AdminReservationService;
 import com.puppy.admin.room.service.CageRoomService;
 import com.puppy.admin.room.vo.CageRoomVO;
-import com.puppy.client.member.service.MemberService;
 import com.puppy.client.member.vo.MemberVO;
 import com.puppy.client.mypage.service.MypageService;
 import com.puppy.client.reservation.vo.ReservationVO;
 import com.puppy.common.vo.ExtraServiceVO;
 import com.puppy.common.vo.PetVO;
 
-import oracle.net.aso.g;
-
-
-
 @Controller
 @RequestMapping(value="/admin/reservation")
 public class AdminReservationController {
 
 	private static final String CONTEXT_PATH = "admin/reservation";
-
+	private HttpSession session; // 세션 선언
+	private String userId; // 체크할 아이디 선언
+	
 	@Autowired
 	private AdminReservationService reservationService;
 	
@@ -47,36 +46,33 @@ public class AdminReservationController {
 	private CageRoomService cageRoomService;
 
 	@Autowired
-	private MemberService memberService;
-	
-	@Autowired
 	private MypageService mypageService;
-	
-	@Autowired
-	private AdminMemberService adminMemberService;
 	
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	@RequestMapping("/newReservationList") //새로운 예약 리스트
-	public ModelAndView newReservationList(@ModelAttribute ReservationVO param) {
-
-		List<ReservationVO> list = reservationService.newReservationList(param);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("newReservationList", list);
-		mav.setViewName(CONTEXT_PATH + "/newReservationList");
-
-		return mav;
-	}
+	/*
+	 * @RequestMapping("/newReservationList") //새로운 예약 리스트 public ModelAndView
+	 * newReservationList(@ModelAttribute ReservationVO param,Model model,
+	 * HttpServletRequest request, HttpServletResponse response)throws Exception {
+	 * sessionCheck(request, response, "잘못된 접근입니다.", model); List<ReservationVO>
+	 * list = reservationService.newReservationList(param);
+	 * 
+	 * ModelAndView mav = new ModelAndView(); mav.addObject("newReservationList",
+	 * list); mav.setViewName(CONTEXT_PATH + "/newReservationList");
+	 * 
+	 * return mav; }
+	 */
 	
 	@RequestMapping("/reservationList") //예약 리스트
-	public ModelAndView reservationList(@ModelAttribute ReservationVO param) {
-
-		List<ReservationVO> list = reservationService.reservationList(param);
+	public ModelAndView reservationList(@ModelAttribute ReservationVO param,Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		sessionCheck(request, response, "잘못된 접근입니다.", model);
+		List<ReservationVO> list1 = reservationService.newReservationList(param);
+		List<ReservationVO> list2 = reservationService.reservationList(param);
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("reservationList", list);
+		mav.addObject("reservationList", list2);
+		mav.addObject("newReservationList", list1);
 		mav.setViewName(CONTEXT_PATH + "/reservationList");
 
 		return mav;
@@ -84,8 +80,8 @@ public class AdminReservationController {
 	
 	
 	@RequestMapping("/reservationDetail") // 예약 상세 정보
-	public ModelAndView reservationDetail(@RequestParam("r_no") String no) {
-
+	public ModelAndView reservationDetail(@RequestParam("r_no") String no,Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		sessionCheck(request, response, "잘못된 접근입니다.", model);
 		ModelAndView mav = new ModelAndView();
 		ReservationVO rvo = reservationService.reservationDetail(Integer.parseInt(no));
 		
@@ -116,7 +112,8 @@ public class AdminReservationController {
 	}
 	
 	@RequestMapping("/reservationApproval") // 예약 승인/거부
-	public String reservationApproval(@ModelAttribute ReservationVO param) {
+	public String reservationApproval(@ModelAttribute ReservationVO param,Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		sessionCheck(request, response, "잘못된 접근입니다.", model);
 		String resultStr = "";
 		int result = reservationService.reservationApproval(param);
 
@@ -130,11 +127,12 @@ public class AdminReservationController {
 		mav.addObject("result", resultStr);
 		mav.setViewName(CONTEXT_PATH + "/reservationCancel");
 
-		return "redirect:/admin/reservation/newReservationList";
+		return "redirect:/admin/reservation/reservationList";
 	}
 	
 	@RequestMapping("/reservationCancel") // 예약 취소
-	public String reservationCancel(@ModelAttribute ReservationVO param) {
+	public String reservationCancel(@ModelAttribute ReservationVO param,Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		sessionCheck(request, response, "잘못된 접근입니다.", model);
 		String resultStr = "";
 		System.out.println(param.getR_no());
 		int result = reservationService.reservationCancel(param);
@@ -152,8 +150,8 @@ public class AdminReservationController {
 	}
 	
 	@RequestMapping("/sendMail") //거부사유 메일
-	public String sendMail(HttpServletRequest request) throws Exception{
-        
+	public String sendMail(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		sessionCheck(request, response, "잘못된 접근입니다.", model);
         String subject = ""; //제목
         subject = request.getParameter("subject");
         String content = ""; //내용
@@ -182,11 +180,35 @@ public class AdminReservationController {
 	
 	
 	@RequestMapping(value = "/mail")
-	public ModelAndView writeForm() {
-
+	public ModelAndView writeForm(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		sessionCheck(request, response, "잘못된 접근입니다.", model);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(CONTEXT_PATH + "/reservationMail");
 
 		return mav;
 	}
+	private void sessionCheck(HttpServletRequest request, HttpServletResponse response, String message, Model model) throws Exception {
+  		session = request.getSession();
+  		userId = (String) session.getAttribute("userId");
+
+	    if(userId == null){
+	    	response.setContentType("text/html; charset=euc-kr");
+	    	PrintWriter out = response.getWriter();
+	    	out.println("<script type='text/javascript'>");
+	    	out.println("alert('"+ message + "');");
+	    	out.println("location.href='/client/login/login'");
+	    	out.println("</script>");
+	    	out.flush();
+	    }else if(!userId.equals("admin")){
+	    	response.setContentType("text/html; charset=euc-kr");
+	    	PrintWriter out = response.getWriter();
+	    	out.println("<script type='text/javascript'>");
+	    	out.println("alert('"+ message + "');");
+	    	out.println("location.href='/client/login/login'");
+	    	out.println("</script>");
+	    	out.flush();
+	    }else {
+	    	model.addAttribute("userId", userId);
+	    }
+  	}
 }

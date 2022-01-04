@@ -2,6 +2,8 @@ package com.puppy.client.member.vo;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class MemberVO {
 
 	private String m_id;// 아이디
@@ -15,8 +17,8 @@ public class MemberVO {
 	private String m_required1;// 필수약관1
 	private String m_required2;// 필수약관2
 	private String m_status;// 회원상태
-	private Date m_regdate;//가입일
-	
+	@DateTimeFormat
+	private Date m_regdate;// 가입일
 
 	public MemberVO() {
 		super();
@@ -39,7 +41,6 @@ public class MemberVO {
 		this.m_status = m_status;
 		this.m_regdate = m_regdate;
 	}
-
 
 	public String getM_id() {
 		return m_id;
@@ -144,8 +145,5 @@ public class MemberVO {
 				+ m_optional + ", m_required1=" + m_required1 + ", m_required2=" + m_required2 + ", m_status="
 				+ m_status + ", m_regdate=" + m_regdate + "]";
 	}
-
-
-
 
 }

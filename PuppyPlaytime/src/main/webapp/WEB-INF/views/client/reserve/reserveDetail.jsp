@@ -1,12 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상세 예약</title>
+<title>결제 페이지</title>
 <link rel="stylesheet" type="text/css" href="/resources/css/reserve/reserveDetail.css">
+<style>
+#days, #r_payPrice, #c_price{
+	border : 0;
+}
+
+#r_payPrice{
+	font-size: 30px;
+	font-weight: bold;
+	color: red;
+}
+
+</style>
 <script>
+	$(function(){
+		var services = $('input[type=checkbox]');
+		var r_price;
+		var days;
+		
+		r_price = parseInt($("#r_payPrice").val());
+		days = parseInt($("#days").val());
+		
+		$("#r_payPrice").val(r_price * days);
+		
+		// 부가서비스 체크박스 구현 
+		$(services).each(function(index, item){
+			// 체크박스 클릭시 실행
+			$(item).click(function(){
+				r_price = parseInt($("#r_payPrice").val());
+				if($(item).is(':checked')){
+					$("#r_payPrice").val(r_price + parseInt($("#servicePrice"+index).val()));
+				}else if(!$(item).is(':checked')){
+					$("#r_payPrice").val(r_price - parseInt($("#servicePrice"+index).val()));
+				}
+			});
+		});
+	});
+	
+	
 	function requestReservation(){
 		$("#reserveDetailForm").attr({
 			"action" : "/client/reserve/reserveDetail",
@@ -19,78 +58,100 @@
 </script>
 </head>
 <body>
+	<h3>예약 페이지</h3>
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="reserveCalendar">예약 날짜</a></li>
-		<li class="breadcrumb-item"><a href="javascript:history.back(-2)">마이펫</a></li>
-		<li class="breadcrumb-item"><a href="javascript:history.back()">예약 룸 정보</a></li>
-		<li class="breadcrumb-item active">결제 페이지</li>
+		<li class="breadcrumb-item"><a href="javascript:history.go(-2)">마이펫 정보</a></li>
+		<li class="breadcrumb-item"><a href="javascript:history.go(-1)">예약룸 정보</a></li>
+		<li class="breadcrumb-item active">예약 페이지</li>
 	</ol>
-	
 	<div class="row">
-		<div class="col p-3" id="mypetInputForm">
-			<h3>예약내용</h3>
+		<div class="container">
 			<form id="reserveDetailForm">
-			<!-- 
-			<div class="form-group row">
-				<label class="col-sm-3 col-form-label" for="inputDefault">룸 종류</label> 
-				<div class="col-sm-7">
-					<input type="text" class="form-control-plaintext" value="이름을 입력해주세요." readonly>
-				</div>
-			</div>
-			
-			<br>
-			
-			<div class="form-group row">
-				<label class="col-sm-3 col-form-label" for="inputDefault">룸 유형</label> 
-				<div class="col-sm-7">
-					<input type="text" class="form-control-plaintext" value="이름을 입력해주세요." readonly>
-				</div>
-			</div>
-			
-			<br>
-			
-			<div class="form-group row">
-      			<label class="col-sm-2 col-form-label" for="inputDefault">부가서비스</label> 
-				<div class="col-sm-10">
-					<label class="form-check-label"> 
-					<input type="radio" class="form-check-input" value="option1" checked>
-					목욕서비스
-					</label>
-					&nbsp;&nbsp;	
-					<label class="form-check-label"> 
-					<input type="radio" class="form-check-input" value="option2"> 
-					매너벨트
-					</label>
-					&nbsp;&nbsp;
-					<label class="form-check-label"> 
-					<input type="radio" class="form-check-input" value="option2"> 
-					간식, 사료 추가
-					</label>
-				</div>
-  		  	</div> -->
   		  	
-  		  	<input type="text" value="${cageRoomVO.c_price }" name="r_payprice" />
-  		  	<input type="hidden" value="valid" name="r_status" id="r_status"/>
-  		  	<input type="hidden" value="N" name="r_approval" id="r_approval"/>
-  		  	<input type="hidden" value="ghld12345" name="m_id" id="m_id"/>
-  		  	<input type="hidden" value="${cageRoomVO.c_no }" name="c_no" id="c_no"/>
+  		  	<div class="card">
+	 			<div class="card-header">
+	    		부가서비스 선택
+	  			</div>
+	  			<div class="card-body">
+	    		<c:choose>
+					<c:when test="${empty extraServiceList}">
+						<label>부가서비스가 존재하지 않습니다.</label>
+					</c:when>
+					<c:otherwise>
+						<c:set var="serviceIndex" value="${0}"/>
+						<c:forEach items="${extraServiceList}" var="extraservice">
+							<label class="form-check-label"> 
+							<input type="checkbox" class="form-check-input" name="services" value="${extraservice.s_no }">
+							${extraservice.s_name }&nbsp;(+ ${extraservice.s_price }원)
+							<input type="hidden" id="servicePrice${serviceIndex}" value="${extraservice.s_price}"/>
+							<c:set var="serviceIndex" value="${serviceIndex + 1}" />
+							</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+						</c:forEach>
+					</c:otherwise>	
+				</c:choose>
+	  			</div>
+			</div>
 			
-			<input type="text" name="startDate" value="${rDate.startDate }"/>
-  			<input type="text" name="endDate" value="${rDate.endDate }"/>
+			<br>
+  		  	
+	  		<div class="card">
+	 			<div class="card-header">
+	    		예약 정보
+	  			</div>
+ 				<ul class="list-group list-group-flush">
+    				<li class="list-group-item">예약 시작 : ${rDate.startDate }</li>
+    				<li class="list-group-item">예약 종료 : ${rDate.endDate }</li>    					
+    				<li class="list-group-item">룸 번호 : ${cageRoomVO.c_no } &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+    				<c:if test="${cageRoomVO.c_kind eq 'small'}" >
+    					방 종류 : 소형
+   					</c:if>
+   					<c:if test="${cageRoomVO.c_kind eq 'middle'}" >
+   						방 종류 : 중형
+   					</c:if>    					<c:if test="${cageRoomVO.c_kind eq 'big'}" >
+    					방 종류 : 대형
+    				</c:if>
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;방 유형 : ${cageRoomVO.c_type } </li>
+  				</ul>
+			</div>
+			
+			<br>
+			
+			<div class="card">
+	 			<div class="card-header">
+	    		가격 정보
+	  			</div>
+	  			<ul class="list-group list-group-flush">
+	    			<li class="list-group-item">
+	    			숙박할 일 수 : 
+    				<input type="text" id="days" value="${calDateDays}" readonly />
+	  				</li>
+	  				<li class="list-group-item">
+	    			1박당 룸 가격 : 
+    				<input type="text" id="c_price" value="${cageRoomVO.c_price }" readonly />
+	  				</li>
+	  			</ul>	
+	  			<div class="card-body">
+	  				가격 : 
+	  				<input type="text" value="${cageRoomVO.c_price }" name="r_payPrice" id="r_payPrice" readonly />
+	  			</div>
+			</div>
+  		  	
+  		  	<br>
+  		  	
+  		  	<input type="hidden" value="valid" name="r_status" id="r_status"/>
+  		  	<input type="hidden" value="W" name="r_approval" id="r_approval"/>
+  		  	<input type="hidden" value="${cageRoomVO.c_no }" name="c_no" id="c_no"/>
+  		  	<input type="hidden" value="${p_no}" name="r_pet" id="r_pet"/>
+			
+			<input type="hidden" name="startDate" value="${rDate.startDate }" id="startDate"/>
+  			<input type="hidden" name="endDate" value="${rDate.endDate }" id="endDate"/>
+			
+			<button type="button" class="btn btn-secondary" onclick="requestReservation()">예약하기</button>
 			</form>
 		</div>
-		
-		<div class="col p-3" id="reservationContent">
-			<h3>결제 수단</h3>
-		</div>
-		<button type="button" class="btn btn-secondary" onclick="requestReservation()">예약하기</button>
 	</div>
-	
-	
-
-	${reservationVO.c_no }
-	<br> ${reservationVO.r_startDate }
-	<br> ${reservationVO.r_endDate }
 
 </body>
 </html>

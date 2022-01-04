@@ -19,8 +19,8 @@ $(function() {
 		if(first < 10){
 			firstDate = "0" + first;
 		}
-		
-		if(end < 10){
+
+		if(last < 10){
 			lastDate = "0" + last;
 		}
 		
@@ -33,7 +33,7 @@ $(function() {
 
 		$("#dateSend").attr({
 			"method": "POST",
-			"action": "/client/reserve/reservePetRegisterForm"
+			"action": "/client/reserve/reservePetSelectForm"
 		});
 		$("#dateSend").submit();
 	});

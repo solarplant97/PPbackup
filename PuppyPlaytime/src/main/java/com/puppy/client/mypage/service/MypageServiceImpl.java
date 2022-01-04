@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.puppy.admin.room.vo.CageRoomVO;
 import com.puppy.client.member.vo.MemberVO;
 import com.puppy.client.mypage.dao.MypageDAO;
 import com.puppy.client.reservation.vo.ReservationVO;
@@ -21,9 +20,9 @@ public class MypageServiceImpl implements MypageService{
 	 
 	//펫목록 구현
 	@Override
-	public List<PetVO> petList(String m_id) {
+	public List<PetVO> petList() {
 		List<PetVO> myList=null;
-		myList=mypageDAO.petList(m_id);
+		myList=mypageDAO.petList();
 		return myList;
 	}
 
@@ -70,19 +69,11 @@ public class MypageServiceImpl implements MypageService{
 		
 	}
 
-	//예약 리스트 구현(예약정보)
+	//예약 리스트 구현
 	@Override
 	public List<ReservationVO> reservationList() {
 		List<ReservationVO> list=null;
 		list=mypageDAO.reservationList();
-		return list;
-	}
-	
-	//예약 리스트 구현(케이지정보)
-	@Override
-	public List<CageRoomVO> cageList() {
-		List<CageRoomVO> list=null;
-		list=mypageDAO.cageList();
 		return list;
 	}
 
