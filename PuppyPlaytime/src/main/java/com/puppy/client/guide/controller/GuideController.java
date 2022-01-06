@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.puppy.admin.extraservice.service.ExtraServiceService;
-import com.puppy.admin.room.controller.CageRoomController;
 import com.puppy.admin.room.service.CageRoomService;
 import com.puppy.admin.room.vo.CageRoomVO;
 import com.puppy.common.vo.ExtraServiceVO;
+import com.puppy.common.vo.PageRequest;
 
 @Controller
 @RequestMapping("/client/guide")
@@ -29,26 +29,18 @@ public class GuideController {
 	@Autowired
 	private ExtraServiceService extraServiceService;
 	
-
-	
-
-		private static final String CONTEXT_PATH = "/client/guide";
-
-		private static final Logger logger = LoggerFactory.getLogger(CageRoomController.class);
-
-		//private static final String UPLOAD_PATH = "\\resources\\images";
-
+	private static final String CONTEXT_PATH = "client/guide";
 		
-		
+	//private static final String UPLOAD_PATH = "\\resources\\images"
 		
 		/****************************************************************
 		 * 룸 리스트 구현하기
 		 *
 		 ****************************************************************/
 		@RequestMapping("/guideRoomList") // 케이지 리스트
-		public ModelAndView roomList(CageRoomVO param) throws Exception {
+		public ModelAndView roomList(PageRequest pageRequest) throws Exception {
 
-			List<CageRoomVO> list = cageRoomService.roomList(param);
+			List<CageRoomVO> list = cageRoomService.roomList(pageRequest);
 
 			ModelAndView mav = new ModelAndView();
 			mav.addObject("roomList", list);
@@ -75,9 +67,7 @@ public class GuideController {
 		  return mav; 
 		  
 		  }
-		 
-		
-		
+		 	
 	/****************************************************************
 	 * 부가서비스 리스트 구현하기
 	 *
@@ -108,14 +98,13 @@ public class GuideController {
    
    /****************************************************************
 	 * 룸 리스트와 부가서비스 리스트 jsp로 전송
-	 *
 	 ****************************************************************/	
    @RequestMapping(value="/guideList")
-   public ModelAndView view(CageRoomVO param1,@ModelAttribute ExtraServiceVO param2) {
+   public ModelAndView view(PageRequest pageRequest,@ModelAttribute ExtraServiceVO param2) {
 	   ModelAndView mav = new ModelAndView();
 	   //데이터만 설정이 가능
 	   
-	    List<CageRoomVO> rlist = cageRoomService.roomList(param1);
+	    List<CageRoomVO> rlist = cageRoomService.roomList(pageRequest);
 
 		List<ExtraServiceVO> elist = extraServiceService.extraServiceList(param2);
 

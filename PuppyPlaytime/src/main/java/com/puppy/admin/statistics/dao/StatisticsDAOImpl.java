@@ -17,27 +17,23 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 	private SqlSession SqlSession;
 	
 	@Override
-	public List<Map<String, Integer>> adminJoinStatistics() {
-		// TODO Auto-generated method stub
+	public List<Map<String, String>> adminJoinStatistics() {
 		return SqlSession.selectList(namespace+".adminJoinStatistics","");
 	}
 
 	@Override
-	public List<Map<String, Integer>> adminReservationStatistics() {
-		// TODO Auto-generated method stub
+	public List<Map<String, String>> adminReservationStatistics() {
 		return SqlSession.selectList(namespace+".adminReservationStatistics","");
 	}
 
 	@Override
-	public List<Map<String, Integer>> adminSalesStatistics() {
-		// TODO Auto-generated method stub
-		return SqlSession.selectList(namespace+".adminSalesStatistics","");
+	public List<Map<String, String>> adminSalesStatistics() {
+		return SqlSession.selectList(namespace+".adminSalesStatistics", "");
 	}
 
 	@Override
-	public Map<String, Integer> adminTodayJoinStatistics() {
-		// TODO Auto-generated method stub
-		return SqlSession.selectMap(namespace+".adminTodayJoinStatistics","");
+	public int adminTodayJoinStatistics() {
+		return SqlSession.selectOne(namespace+".adminTodayJoinStatistics","");
 	}
 
 }

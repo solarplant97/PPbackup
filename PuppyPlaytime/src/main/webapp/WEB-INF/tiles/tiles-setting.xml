@@ -11,7 +11,7 @@
 	</definition>
 	
 	<definition name="content1" template="/WEB-INF/views/template/client/subLayout.jsp">
-		<put-attribute name="title" value="000 사이트" />
+		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/views/template/client/menu.jsp" />
 		<put-attribute name="body" value="" />
@@ -19,14 +19,13 @@
 	</definition>
 	
 	<definition name="content2" template="/WEB-INF/views/template/client/subLayout2.jsp">
-		<put-attribute name="title" value="000 사이트" />
+		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/template/client/footer.jsp" />
 	</definition>
 	
 	<definition name="client/mypage/*" extends="content1">
-		<put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/client/mypage/{1}.jsp" />
 	</definition>
 	
@@ -40,6 +39,12 @@
 	
 	<definition name="client/reserve/*" extends="content2">
 		<put-attribute name="body" value="/WEB-INF/views/client/reserve/{1}.jsp" />
+	</definition>
+	
+	<!-- 사용자 이용안내 -->
+	<definition name="client/guide/*" extends="content1">
+		<put-attribute name="menu" value="/WEB-INF/views/template/client/menu_guide.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/client/guide/{1}.jsp" />
 	</definition>
 	
 	<!-- 사용자 공지사항 -->

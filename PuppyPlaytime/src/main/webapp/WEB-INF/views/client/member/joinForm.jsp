@@ -69,13 +69,12 @@
 			alert("아이디를 입력해야 합니다.");
 			return false;
 		}
-
+		
 		//아이디 입력 문자수를 8~20자로 제한하는 조건문
 		if (!checkIP.test(userID.value)) {
 			alert("아이디는 8~20자 이내로 입력 가능합니다.");
 			return false;
 		}
-		/*비밀번호 유효성 검사*/
 		//비밀번호에서 입력 필수 조건문
 		if (userPass.value == '') {
 			alert("아이디를 입력해야 합니다.");
@@ -86,6 +85,7 @@
 			alert("비밀번호는 특수문자 포함 8~20자 이내로 입력 가능합니다.");
 			return false;
 		}
+		
 		//비밀번호와 비밀번호확인이 동일한지 검사
 		if (userPassC.value != userPass.value) {
 			alert("비밀번호가 틀립니다. 다시 확인하여 입력해주세요.");
@@ -157,9 +157,7 @@
 	<form id="memberForm" name="memberForm" action="#"
 		onsubmit="return checks();" method="post">
 		<div class="form-group">
-			<caption>
-				<h3>회원가입</h3>
-			</caption>
+			<h3>회원가입</h3>
 
 			<div class="form-floating">
 				<input type="text" id="m_id" name="m_id" class="form-control"

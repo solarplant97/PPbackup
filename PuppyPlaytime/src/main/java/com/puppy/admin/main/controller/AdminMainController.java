@@ -2,7 +2,6 @@ package com.puppy.admin.main.controller;
 
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.puppy.admin.reservation.service.AdminReservationService;
-import com.puppy.admin.statistics.controller.StatisticsController;
 import com.puppy.admin.statistics.service.StatisticsService;
-import com.puppy.client.reservation.service.ReservationService;
 import com.puppy.client.reservation.vo.ReservationVO;
 
 
@@ -39,7 +36,7 @@ public class AdminMainController {
 		sessionCheck(request, response, "잘못된 접근입니다.", model);
 		
 		List<ReservationVO> list = reservationService.todayReservationList(param);
-		Map<String, Integer> map = satisticsService.adminTodayJoinStatistics();
+		int map = satisticsService.adminTodayJoinStatistics();
 		
 		System.out.println("리스트"+list);
 		System.out.println("맵"+map);

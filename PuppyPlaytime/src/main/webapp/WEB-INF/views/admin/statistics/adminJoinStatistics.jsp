@@ -10,8 +10,14 @@
 </head>
 <body>
 <div class="tab-content">
-	<div id="newReservationList" class="container tab-pane active">
+	<div id="adminJoinStatistics" class="container tab-pane active">
 		<img src="/graph/barJoinChart.jpg" class="img-thumbnail" />
+	</div>	
+	<div id="adminReservationStatistics" class="container tab-pane fade">
+		<img src="/graph/barReservationChart.jpg" class="img-thumbnail" />
+	</div>
+	<div id="adminSalesStatistics" class="container tab-pane fade">
+		<img src="/graph/barSalesChart.jpg" class="img-thumbnail" />
 	</div>
 </div>
 </body>

@@ -29,7 +29,7 @@
 <!-- 룸 상세 페이지를 위한 게시물 조회 -->
 <select id="roomDetail" parameterType="com.puppy.admin.room.vo.CageRoomVO" resultMap="cageRoomVO">
 		
-		SELECT c.c_no,c.c_kind,c.c_type,c.c_price,c.c_explain,c.c_picture,c.c_usestatus
+		SELECT c.c_no,c.c_kind,c.c_type,c.c_price,c.c_explain,c.c_picture
 		FROM cageroom_tbl c 
 		WHERE c.c_no =#{c_no}
 		
